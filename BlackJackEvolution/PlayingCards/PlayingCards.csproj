@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BridgeDeck.cs" />
+    <Compile Include="CardSets.cs" />
     <Compile Include="Card.cs" />
     <Compile Include="Deck.cs" />
     <Compile Include="IList_Shuffle.cs" />

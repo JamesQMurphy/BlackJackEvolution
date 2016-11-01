@@ -12,7 +12,7 @@ namespace BlackJackEvolution.Host
         static void Main(string[] args)
         {
 
-            Deck deck = new BridgeDeck();
+            Deck deck = new Deck(CardSets.Bridge);
             deck.Shuffle();
             foreach (Card card in deck)
             {
