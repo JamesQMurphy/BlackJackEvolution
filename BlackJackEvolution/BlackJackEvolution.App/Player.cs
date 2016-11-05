@@ -10,8 +10,8 @@ namespace BlackJackEvolution.App
     public class Player
     {
         public const int NUM_GENES = 350;
-
-        public char[] Genes = new char[NUM_GENES];
+        public readonly char[] Genes = new char[NUM_GENES];
+        public int Cash { get; set; }
 
         public Player()
         {

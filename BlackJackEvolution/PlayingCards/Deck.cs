@@ -10,6 +10,7 @@ namespace JamesQMurphy.PlayingCards
     public class Deck : IReadOnlyCollection<Card>
     {
         private List<Card> _allCards = null;
+        private int _nextCardIndex = 0;
 
         public Deck()
         {
@@ -29,6 +30,14 @@ namespace JamesQMurphy.PlayingCards
             }
         }
 
+        public int UndealtCount
+        {
+            get
+            {
+                return Count - _nextCardIndex;
+            }
+        }
+
         public IEnumerator<Card> GetEnumerator()
         {
             return ((ICollection<Card>)_allCards).GetEnumerator();
@@ -39,10 +48,20 @@ namespace JamesQMurphy.PlayingCards
             return ((ICollection<Card>)_allCards).GetEnumerator();
         }
 
+        public Card Deal()
+        {
+            return _allCards[_nextCardIndex++];
+        }
 
         public void Shuffle()
         {
-            _allCards.Shuffle();
+            _allCards.Shuffle(_nextCardIndex);
+        }
+
+        public void GatherAndShuffle()
+        {
+            _nextCardIndex = 0;
+            Shuffle();
         }
     }
 }
