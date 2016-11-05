@@ -11,6 +11,7 @@ namespace JamesQMurphy.PlayingCards
     {
         private List<Card> _allCards = null;
         private int _nextCardIndex = 0;
+        private Random random = new Random();
 
         public Deck()
         {
@@ -55,7 +56,7 @@ namespace JamesQMurphy.PlayingCards
 
         public void Shuffle()
         {
-            _allCards.Shuffle(_nextCardIndex);
+            _allCards.Shuffle(_nextCardIndex, random);
         }
 
         public void GatherAndShuffle()
