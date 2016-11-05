@@ -9,29 +9,23 @@ namespace BlackJackEvolution.App
 {
     public class Player
     {
-        public const int NUM_GENES = 350;
-        public readonly char[] Genes = new char[NUM_GENES];
+        public const int NUM_GENES = 260;
+        public readonly byte[] Genes = new byte[NUM_GENES];
         public int Cash { get; set; }
 
         public Player()
         {
             Random r = new Random();
-            for (int i = 0; i<NUM_GENES; i++)
+            r.NextBytes(Genes);
+        }
+
+        public Player(Player parent1, Player parent2) : this()
+        {
+            for(int i = 0; i < NUM_GENES; i++)
             {
-                switch(r.Next(3))
-                {
-                    case 0:
-                        Genes[i] = 'S';
-                        break;
-
-                    case 1:
-                        Genes[i] = 'H';
-                        break;
-
-                    case 2:
-                        Genes[i] = 'D';
-                        break;
-                }
+                byte b1 = parent1.Genes[i];
+                byte b2 = parent2.Genes[i];
+                this.Genes[i] = (byte)(((b1 ^ b2) & this.Genes[i]) | (b1 & b2));
             }
         }
 
