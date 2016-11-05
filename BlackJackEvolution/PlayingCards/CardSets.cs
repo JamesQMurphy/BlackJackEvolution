@@ -63,5 +63,31 @@ namespace JamesQMurphy.PlayingCards
             new Card(Rank.King, Suit.Spades),
             new Card(Rank.Ace, Suit.Spades)
         };
+
+        private const int NUM_DECKS_IN_BLACKJACK = 6;
+        private static readonly object _lockObject = new object();
+        private static Card[] _blackJack = null;
+        public static Card[] BlackJack
+        {
+            get
+            {
+                if ( _blackJack == null )
+                {
+                    lock (_lockObject)
+                    {
+                        if (_blackJack == null)
+                        {
+                            _blackJack = new Card[NUM_DECKS_IN_BLACKJACK * Bridge.Length];
+                            for ( int i = 0; i < NUM_DECKS_IN_BLACKJACK; i++)
+                            {
+                                Bridge.CopyTo(_blackJack, (i * Bridge.Length));
+                            }
+                        }
+                    }
+                }
+                return _blackJack;
+            }
+        }
     }
+
 }

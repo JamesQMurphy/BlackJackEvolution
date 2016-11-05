@@ -9,5 +9,9 @@ namespace BlackJackEvolution.App
     public class Simulation
     {
 
+        public void Start()
+        {
+
+        }
     }
 }

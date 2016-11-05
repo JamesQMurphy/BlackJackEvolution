@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayingCards", "PlayingCard
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackJackEvolution.Host", "BlackJackEvolution.Host\BlackJackEvolution.Host.csproj", "{21233062-9332-4DB0-BBD5-6587015C70DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackJackEvolution.Test", "BlackJackEvolution.Test\BlackJackEvolution.Test.csproj", "{47508A11-57CD-4724-9EE7-110B6D01BF02}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{21233062-9332-4DB0-BBD5-6587015C70DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21233062-9332-4DB0-BBD5-6587015C70DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21233062-9332-4DB0-BBD5-6587015C70DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47508A11-57CD-4724-9EE7-110B6D01BF02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47508A11-57CD-4724-9EE7-110B6D01BF02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47508A11-57CD-4724-9EE7-110B6D01BF02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47508A11-57CD-4724-9EE7-110B6D01BF02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
