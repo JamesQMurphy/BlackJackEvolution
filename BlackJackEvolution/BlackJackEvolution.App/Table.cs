@@ -13,28 +13,19 @@ namespace BlackJackEvolution.App
 
         private readonly Deck _deck = new Deck(CardSets.BlackJack);
         private readonly List<Card> _dealerHand = new List<Card>();
-
-        public readonly Player[] Players;
-        private readonly List<Card>[] _playerHands;
-        private readonly List<Card>[] _playerSplitHands;
+        public readonly Seat[] Seats;
 
         public int Size
         {
-            get { return Players.Length; }
+            get { return Seats.Length; }
         }
 
         public Table(int size)
         {
             _deck.Shuffle();
-
-            Players = new Player[size];
-            _playerHands = new List<Card>[size];
-            _playerSplitHands = new List<Card>[size];
-            for ( int i = 0; i < size; i++)
-            {
-                _playerHands[i] = new List<Card>();
-                _playerSplitHands[i] = new List<Card>();
-            }
+            Seats = new Seat[size];
+            for (int i = 0; i < size; i++)
+                Seats[i] = new Seat();
         }
 
         public string PlayHand()
@@ -45,13 +36,10 @@ namespace BlackJackEvolution.App
 
             // Clear the table
             _dealerHand.Clear();
-            foreach (var hand in _playerHands)
+            foreach (var seat in Seats)
             {
-                hand.Clear();
-            }
-            foreach (var hand in _playerSplitHands)
-            {
-                hand.Clear();
+                seat.Hand.Clear();
+                seat.SplitHand.Clear();
             }
 
             // Reshuffle if necessary
@@ -65,12 +53,12 @@ namespace BlackJackEvolution.App
             // Deal two cards
             for(int c = 0; c < 2; c++)
             {
-                for(int p = 0; p < Size; p++)
+                foreach(var seat in Seats)
                 {
-                    if (Players[p] != null)
-                        _playerHands[p].Add(_deck.Deal());
+                    if (seat.Player != null)
+                        seat.Hand.Add(_deck.Deal());
                 }
-                _dealerHand.Add(_deck.Deal());
+
             }
 
             // TODO: check for dealer blackjack
@@ -89,9 +77,9 @@ namespace BlackJackEvolution.App
             // TODO: payoff
             for (int p = 0; p < Size; p++)
             {
-                if (Players[p] != null)
+                if (Seats[p].Player != null)
                 {
-                    var hand = _playerHands[p];
+                    var hand = Seats[p].Hand;
                     sb.AppendFormat("Player {0}: {1} ({2})\n", p, BlackJackHandToString(hand), new BlackJackScore(hand));
                 }
             }

@@ -14,9 +14,9 @@ namespace BlackJackEvolution.Host
         {
 
             Table table = new Table(5);
-            table.Players[0] = new Player();
-            table.Players[2] = new Player();
-            table.Players[3] = new Player();
+            table.Seats[0].Player = new Player();
+            table.Seats[2].Player = new Player();
+            table.Seats[3].Player = new Player();
 
 
             for (int i = 0; i < 10; i++)
