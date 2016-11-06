@@ -25,7 +25,7 @@ namespace BlackJackEvolution.App
             _deck.Shuffle();
             Seats = new Seat[size];
             for (int i = 0; i < size; i++)
-                Seats[i] = new Seat();
+                Seats[i] = new Seat(i);
         }
 
         public string PlayHand()
@@ -45,25 +45,59 @@ namespace BlackJackEvolution.App
             // Reshuffle if necessary
             if (_deck.UndealtCount * 4 < _deck.Count)
             {
+                sb.AppendFormat("Deck down to {0} cards, reshuffling\n", _deck.UndealtCount);
                 _deck.GatherAndShuffle();
             }
+
+            var ActiveSeats = Seats.Where(s => !s.IsEmpty);
 
             // TODO: Bet
 
             // Deal two cards
             for(int c = 0; c < 2; c++)
             {
-                foreach(var seat in Seats)
+                foreach(var seat in ActiveSeats)
                 {
-                    if (seat.Player != null)
-                        seat.Hand.Add(_deck.Deal());
+                    seat.Hand.Add(_deck.Deal());
                 }
-
+                _dealerHand.Add(_deck.Deal());
             }
 
-            // TODO: check for dealer blackjack
+            // TODO: check for blackjacks
 
-            // TODO: players play
+            // Players play
+            foreach (var seat in ActiveSeats)
+            {
+                // TODO: split
+                Plays possiblePlays = Plays.Stand | Plays.Hit | Plays.Double | Plays.Surrender;
+                BlackJackScore score = new BlackJackScore(seat.Hand);
+                Plays play = Plays.Stand;
+                do
+                {
+                    play = seat.Player.GetPlay(seat.Hand, _dealerHand[1], possiblePlays);
+
+                    switch (play)
+                    {
+                        case Plays.Stand:
+                            break;
+                        case Plays.Double:
+                            break;
+                        case Plays.Hit:
+                            seat.Hand.Add(_deck.Deal());
+                            break;
+                        case Plays.Split:
+                            break;
+                        case Plays.Surrender:
+                            throw new NotImplementedException();
+                        default:
+                            break;
+                    }
+
+                    possiblePlays &= ~Plays.Double;
+                    score = new BlackJackScore(seat.Hand);
+                } while (score.Score < 21 && play.HasFlag(Plays.Hit));
+
+            }
 
             // Dealer plays
             BlackJackScore dealerScore = new BlackJackScore(_dealerHand);
@@ -75,13 +109,10 @@ namespace BlackJackEvolution.App
 
             // Score hands
             // TODO: payoff
-            for (int p = 0; p < Size; p++)
+            foreach (var seat in ActiveSeats)
             {
-                if (Seats[p].Player != null)
-                {
-                    var hand = Seats[p].Hand;
-                    sb.AppendFormat("Player {0}: {1} ({2})\n", p, BlackJackHandToString(hand), new BlackJackScore(hand));
-                }
+                var hand = seat.Hand;
+                sb.AppendFormat("Player {0}: {1} ({2})\n", seat.Number, BlackJackHandToString(hand), new BlackJackScore(hand));
             }
             sb.AppendFormat("Dealer: {0} ({1})", BlackJackHandToString(_dealerHand), dealerScore);
 

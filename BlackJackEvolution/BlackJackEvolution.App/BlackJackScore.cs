@@ -9,6 +9,22 @@ namespace BlackJackEvolution.App
 {
     public struct BlackJackScore
     {
+        public static int GetPointValue(Rank rank)
+        {
+            switch (rank)
+            {
+                case Rank.Ace:
+                    return 11;
+                case Rank.Ten:
+                case Rank.Jack:
+                case Rank.Queen:
+                case Rank.King:
+                    return 10;
+                default:
+                    return (int)rank;
+            }
+        }
+
         public int Score;
         public bool IsSoft;
 
@@ -20,39 +36,32 @@ namespace BlackJackEvolution.App
             bool noAces = true;
             foreach (var rank in cards.Select(c => c.Rank))
             {
-                switch (rank)
+                Score += GetPointValue(rank);
+                if (rank == Rank.Ace)
                 {
-                    case Rank.Ace:
-                        if (noAces)
-                        {
-                            IsSoft = true;
-                            noAces = false;
-                            Score += 11;
-                        }
-                        else
-                        {
-                            Score += 1;
-                        }
-                        break;
-
-                    case Rank.Ten:
-                    case Rank.Jack:
-                    case Rank.Queen:
-                    case Rank.King:
-                        Score += 10;
-                        break;
-
-                    default:
-                        Score += (int)rank;
-                        break;
+                    if (noAces)
+                    {
+                        IsSoft = true;
+                        noAces = false;
+                    }
+                    else
+                    {
+                        // 2nd ace; only counts 1
+                        Score -= 10;
+                    }
                 }
             }
-            if ( (Score > 21) && IsSoft )
+            if ((Score > 21) && IsSoft)
             {
                 Score -= 10;
                 IsSoft = false;
             }
+        }
 
+        public BlackJackScore(Card card)
+        {
+            Score = GetPointValue(card.Rank);
+            IsSoft = (card.Rank == Rank.Ace);
         }
 
         public override string ToString()

@@ -29,9 +29,12 @@ namespace BlackJackEvolution.App
             }
         }
 
-        public char GetPlay(IList<Card> playerHand, Card dealerShowing)
+        public Plays GetPlay(IEnumerable<Card> hand, Card dealerShowing, Plays possiblePlays)
         {
-            return 'S';
+            BlackJackScore score = new BlackJackScore(hand);
+            if (score.Score < 12) return Plays.Hit;
+            return Plays.Stand;
         }
+
     }
 }
