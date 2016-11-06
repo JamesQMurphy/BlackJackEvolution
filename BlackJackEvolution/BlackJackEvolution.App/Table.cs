@@ -24,13 +24,19 @@ namespace BlackJackEvolution.App
             get { return Seats.Length; }
         }
 
-        public Table(int size)
+        public Table(int size, Random rand = null)
         {
+            if (rand != null)
+            {
+                _deck = new Deck(CardSets.BlackJack, rand);
+            }
             _deck.Shuffle();
             Seats = new Seat[size];
             for (int i = 0; i < size; i++)
                 Seats[i] = new Seat(i);
         }
+
+        public string Name { get; set; }
 
         public string PlayHand()
         {
@@ -153,7 +159,7 @@ namespace BlackJackEvolution.App
                     }
                 }
                 seat.Player.Chips += winnings;
-                sb.AppendFormat("Player {0}: {1} ({2}) bet:{3} win:{4} chips:{5}\n", seat.Number, BlackJackHandToString(hand), new BlackJackScore(hand), seat.Bet, (winnings - seat.Bet), seat.Player.Chips);
+                sb.AppendFormat("Player {0} at table {1}: {2} ({3}) bet:{4} win:{5} chips:{6}\n", seat.Player.Name, this.Name, BlackJackHandToString(hand), new BlackJackScore(hand), seat.Bet, (winnings - seat.Bet), seat.Player.Chips);
             }
             sb.AppendFormat("Dealer: {0} ({1})", BlackJackHandToString(_dealerHand), dealerScore);
 

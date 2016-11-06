@@ -13,20 +13,23 @@ namespace BlackJackEvolution.Host
         static void Main(string[] args)
         {
 
-            Table table = new Table(5);
-            table.Seats[0].Player = new Player();
-            table.Seats[2].Player = new Player();
-            table.Seats[3].Player = new Player();
+            Simulation s = new Simulation();
+            s.Start();
 
-            // Give them chips
-            table.Seats[0].Player.Chips = table.Bet * 100;
-            table.Seats[2].Player.Chips = table.Bet * 100;
-            table.Seats[3].Player.Chips = table.Bet * 100;
+            //Table table = new Table(5);
+            //table.Seats[0].Player = new Player();
+            //table.Seats[2].Player = new Player();
+            //table.Seats[3].Player = new Player();
 
-            for (int i = 0; i < 500; i++)
-            {
-                Console.WriteLine("{0}\n", table.PlayHand());
-            }
+            //// Give them chips
+            //table.Seats[0].Player.Chips = table.Bet * 100;
+            //table.Seats[2].Player.Chips = table.Bet * 100;
+            //table.Seats[3].Player.Chips = table.Bet * 100;
+
+            //for (int i = 0; i < 500; i++)
+            //{
+            //    Console.WriteLine("{0}\n", table.PlayHand());
+            //}
         }
     }
 }

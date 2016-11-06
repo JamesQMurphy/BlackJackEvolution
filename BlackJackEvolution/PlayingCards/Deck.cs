@@ -18,9 +18,22 @@ namespace JamesQMurphy.PlayingCards
             _allCards = new List<Card>();
         }
 
-        public Deck(IEnumerable<Card> cards)
+        public Deck(Random rand) : this()
+        {
+            if (rand != null)
+            {
+                this.random = rand;
+            }
+        }
+
+
+        public Deck(IEnumerable<Card> cards, Random rand = null)
         {
             _allCards = new List<Card>(cards);
+            if (rand != null)
+            {
+                this.random = rand;
+            }
         }
 
         public int Count

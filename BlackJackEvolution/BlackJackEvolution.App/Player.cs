@@ -29,6 +29,8 @@ namespace BlackJackEvolution.App
             }
         }
 
+        public string Name { get; set; }
+
         public Plays GetPlay(IEnumerable<Card> hand, Card dealerShowing, Plays possiblePlays)
         {
             BlackJackScore score = new BlackJackScore(hand);
