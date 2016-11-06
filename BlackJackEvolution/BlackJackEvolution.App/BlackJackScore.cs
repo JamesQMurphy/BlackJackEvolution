@@ -64,6 +64,11 @@ namespace BlackJackEvolution.App
             IsSoft = (card.Rank == Rank.Ace);
         }
 
+        public bool IsBlackjack
+        {
+            get { return (Score == 21 && IsSoft == true); }
+        }
+
         public override string ToString()
         {
             return string.Format("{0}{1}", Score, IsSoft ? " soft":string.Empty);

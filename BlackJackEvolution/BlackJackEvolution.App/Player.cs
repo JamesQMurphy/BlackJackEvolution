@@ -11,7 +11,7 @@ namespace BlackJackEvolution.App
     {
         public const int NUM_GENES = 260;
         public readonly byte[] Genes = new byte[NUM_GENES];
-        public int Cash { get; set; }
+        public int Chips { get; set; }
 
         public Player()
         {

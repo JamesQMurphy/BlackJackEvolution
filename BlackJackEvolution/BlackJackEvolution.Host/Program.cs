@@ -18,8 +18,12 @@ namespace BlackJackEvolution.Host
             table.Seats[2].Player = new Player();
             table.Seats[3].Player = new Player();
 
+            // Give them chips
+            table.Seats[0].Player.Chips = table.Bet * 100;
+            table.Seats[2].Player.Chips = table.Bet * 100;
+            table.Seats[3].Player.Chips = table.Bet * 100;
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 500; i++)
             {
                 Console.WriteLine("{0}\n", table.PlayHand());
             }

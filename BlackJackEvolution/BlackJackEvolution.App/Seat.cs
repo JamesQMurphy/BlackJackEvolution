@@ -19,10 +19,19 @@ namespace BlackJackEvolution.App
         }
 
         public Player Player { get; set; }
+        public int Bet { get; set; }
 
         public bool IsEmpty
         {
             get { return Player == null; }
         }
+
+        public void Clear()
+        {
+            Hand.Clear();
+            SplitHand.Clear();
+            Bet = 0;
+        }
+
     }
 }
