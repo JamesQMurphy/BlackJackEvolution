@@ -38,7 +38,7 @@ namespace BlackJackEvolution.App
 
 
             int generation = 0;
-            while (generation < 100)
+            while (generation < 5000)
             {
                 // Give all the players chips; assign them to a table
                 int tableNum = 0;
