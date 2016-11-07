@@ -36,6 +36,8 @@ namespace BlackJackEvolution.App
                 tables[i].Name = i.ToString();
             }
 
+            Task[] taskArray = new Task[NUM_TABLES];
+
 
             int generation = 0;
             while (generation < 5000)
@@ -57,10 +59,26 @@ namespace BlackJackEvolution.App
                 }
 
                 // play sets of SET_SIZE hands until half the players are broke
+
+
                 int set = 0;
                 int count = 0;
                 while (count < (NUM_PLAYERS / 2))
                 {
+                    //for (int i = 0; i < NUM_TABLES; i++)
+                    //{
+                    //    taskArray[i] = Task.Factory.StartNew<string>((object oTable) =>
+                    //    {
+                    //        Table t = (Table)oTable;
+                    //        for (int s = 0; s < SET_SIZE; s++)
+                    //            t.PlayHand();
+                    //        //Console.WriteLine("Table {0}", t.Name);
+                    //        return string.Empty;
+                    //    }, tables[i]);
+                    //}
+                    //Task.WaitAll(taskArray);
+
+
                     // TODO: make this multithreaded
                     for (int s = 0; s < SET_SIZE; s++)
                         foreach (var table in tables)
@@ -68,6 +86,8 @@ namespace BlackJackEvolution.App
                             var results = table.PlayHand();
                             //Console.WriteLine(results);
                         }
+
+
                     count = players.Count(p => p.Chips < BET);
                     set++;
 
