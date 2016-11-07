@@ -10,6 +10,7 @@ namespace BlackJackEvolution.App
     public class Player
     {
         public const int NUM_GENES = 260;
+        public const byte USABLE_GENES_MASK = 0x1F;
         public readonly byte[] Genes = new byte[NUM_GENES];
         public int Chips { get; set; }
 
@@ -34,9 +35,23 @@ namespace BlackJackEvolution.App
         public Plays GetPlay(IEnumerable<Card> hand, Card dealerShowing, Plays possiblePlays)
         {
             BlackJackScore score = new BlackJackScore(hand);
-            if (score.Score < 12) return Plays.Hit;
+            BlackJackScore dealerScore = new BlackJackScore(dealerShowing);
+            int index = GetGeneNumber(score, dealerScore);
+
+            Plays willingPlays = (Plays)((byte)possiblePlays & Genes[index] & USABLE_GENES_MASK);
+
+            if (willingPlays.HasFlag(Plays.Hit))
+                return Plays.Hit;
+
             return Plays.Stand;
         }
 
+        private int GetGeneNumber(BlackJackScore score, BlackJackScore dealerShowing)
+        {
+            // Four is the lowest non-soft hand
+            // If hand is soft, add 8 (number of non-soft hands, minus offset)
+            int p = score.Score - 4 + (score.IsSoft ? 8 : 0);
+            return (p * 10) + dealerShowing.Score - 2;
+        }
     }
 }
