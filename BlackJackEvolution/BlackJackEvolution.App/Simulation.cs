@@ -13,6 +13,7 @@ namespace BlackJackEvolution.App
         public const int NUM_TABLES = 400;
         public const int BET = 10;
         public const int INITIAL_CHIPS = 5000;
+        public const int MUTATION_ODDS = 10000000;
         public const bool MULTI_THREADED = true;
 
         public const int SET_SIZE = 10;
@@ -78,7 +79,7 @@ namespace BlackJackEvolution.App
                             }, tables[i]);
                         }
                         Task.WaitAll(taskArray);
-
+                        GC.Collect();
                     }
 
                     // single-threaded
@@ -112,6 +113,7 @@ namespace BlackJackEvolution.App
                     while (dam == sire)
                         dam = CryptoRandom.Generator.Next(NUM_PLAYERS / 2);
                     players[born] = new Player(players[sire], players[dam]);
+                    players[born].Mutate(MUTATION_ODDS);
                     //Console.WriteLine("Player {0} produced from player {1} and {2}", born, sire, dam);
 
                     if (CryptoRandom.Generator.Next(3) == 0)

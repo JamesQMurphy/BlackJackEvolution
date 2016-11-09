@@ -46,6 +46,19 @@ namespace BlackJackEvolution.App
             return Plays.Stand;
         }
 
+        public void Mutate(int odds)
+        {
+            for ( int i = 0; i < NUM_GENES; i++)
+            {
+                if (0 == CryptoRandom.Generator.Next(odds))
+                {
+                    var bitNumber = CryptoRandom.Generator.Next(8);
+                    Genes[i] = (byte)(Genes[i] ^ (1 << bitNumber));
+                    Console.WriteLine("Mutation! Player {0} Gene {1} Bit{2}", Name, i, bitNumber);
+                }
+            }
+        }
+
         private int GetGeneNumber(BlackJackScore score, BlackJackScore dealerShowing)
         {
             // Four is the lowest non-soft hand
