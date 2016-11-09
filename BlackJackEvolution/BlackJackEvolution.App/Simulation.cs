@@ -16,8 +16,6 @@ namespace BlackJackEvolution.App
 
         public const int SET_SIZE = 10;
 
-        public static readonly Random Random = new Random();
-
         Player[] players = new Player[NUM_PLAYERS];
         Table[] tables = new Table[NUM_TABLES];
 
@@ -32,7 +30,7 @@ namespace BlackJackEvolution.App
             // Create initial batch of tables
             for (int i = 0; i < NUM_TABLES; i++)
             {
-                tables[i] = new Table(TABLE_SIZE, Random);
+                tables[i] = new Table(TABLE_SIZE);
                 tables[i].Name = i.ToString();
             }
 
@@ -105,11 +103,11 @@ namespace BlackJackEvolution.App
                 {
                     int dam = sire;
                     while (dam == sire)
-                        dam = Random.Next(NUM_PLAYERS / 2);
+                        dam = CryptoRandom.Generator.Next(NUM_PLAYERS / 2);
                     players[born] = new Player(players[sire], players[dam]);
                     //Console.WriteLine("Player {0} produced from player {1} and {2}", born, sire, dam);
 
-                    if (Random.Next(3) == 0)
+                    if (CryptoRandom.Generator.Next(3) == 0)
                         sire++;
 
                     born++;

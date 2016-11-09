@@ -24,12 +24,8 @@ namespace BlackJackEvolution.App
             get { return Seats.Length; }
         }
 
-        public Table(int size, Random rand = null)
+        public Table(int size)
         {
-            if (rand != null)
-            {
-                _deck = new Deck(CardSets.BlackJack, rand);
-            }
             _deck.Shuffle();
             Seats = new Seat[size];
             for (int i = 0; i < size; i++)

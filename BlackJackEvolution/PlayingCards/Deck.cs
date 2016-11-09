@@ -11,29 +11,16 @@ namespace JamesQMurphy.PlayingCards
     {
         private List<Card> _allCards = null;
         private int _nextCardIndex = 0;
-        private Random random = new Random();
 
         public Deck()
         {
             _allCards = new List<Card>();
         }
 
-        public Deck(Random rand) : this()
-        {
-            if (rand != null)
-            {
-                this.random = rand;
-            }
-        }
 
-
-        public Deck(IEnumerable<Card> cards, Random rand = null)
+        public Deck(IEnumerable<Card> cards)
         {
             _allCards = new List<Card>(cards);
-            if (rand != null)
-            {
-                this.random = rand;
-            }
         }
 
         public int Count
@@ -69,7 +56,7 @@ namespace JamesQMurphy.PlayingCards
 
         public void Shuffle()
         {
-            _allCards.Shuffle(_nextCardIndex, random);
+            _allCards.Shuffle(_nextCardIndex);
         }
 
         public void GatherAndShuffle()
