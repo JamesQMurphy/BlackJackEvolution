@@ -13,6 +13,7 @@ namespace BlackJackEvolution.App
         public const int NUM_TABLES = 400;
         public const int BET = 10;
         public const int INITIAL_CHIPS = 5000;
+        public const bool MULTI_THREADED = true;
 
         public const int SET_SIZE = 10;
 
@@ -63,27 +64,33 @@ namespace BlackJackEvolution.App
                 int count = 0;
                 while (count < (NUM_PLAYERS / 2))
                 {
-                    //for (int i = 0; i < NUM_TABLES; i++)
-                    //{
-                    //    taskArray[i] = Task.Factory.StartNew<string>((object oTable) =>
-                    //    {
-                    //        Table t = (Table)oTable;
-                    //        for (int s = 0; s < SET_SIZE; s++)
-                    //            t.PlayHand();
-                    //        //Console.WriteLine("Table {0}", t.Name);
-                    //        return string.Empty;
-                    //    }, tables[i]);
-                    //}
-                    //Task.WaitAll(taskArray);
-
-
-                    // TODO: make this multithreaded
-                    for (int s = 0; s < SET_SIZE; s++)
-                        foreach (var table in tables)
+                    if (MULTI_THREADED)
+                    {
+                        for (int i = 0; i < NUM_TABLES; i++)
                         {
-                            var results = table.PlayHand();
-                            //Console.WriteLine(results);
+                            taskArray[i] = Task.Factory.StartNew<string>((object oTable) =>
+                            {
+                                Table t = (Table)oTable;
+                                for (int s = 0; s < SET_SIZE; s++)
+                                    t.PlayHand();
+                                //Console.WriteLine("Table {0}", t.Name);
+                                return string.Empty;
+                            }, tables[i]);
                         }
+                        Task.WaitAll(taskArray);
+
+                    }
+
+                    // single-threaded
+                    else
+                    {
+                        for (int s = 0; s < SET_SIZE; s++)
+                            foreach (var table in tables)
+                            {
+                                var results = table.PlayHand();
+                                //Console.WriteLine(results);
+                            }
+                    }
 
 
                     count = players.Count(p => p.Chips < BET);
