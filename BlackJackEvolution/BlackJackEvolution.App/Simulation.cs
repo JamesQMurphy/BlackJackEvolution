@@ -8,13 +8,16 @@ namespace BlackJackEvolution.App
 {
     public class Simulation
     {
-        public const int NUM_PLAYERS = 2000;
+        public const int NUM_PLAYERS = 200;
         public const int TABLE_SIZE = 5;
-        public const int NUM_TABLES = 400;
+        public const int NUM_TABLES = 40;
+
+        public const int NUM_GENERATIONS = 10000;
         public const int BET = 10;
         public const int INITIAL_CHIPS = 5000;
-        public const int MUTATION_ODDS = 10000000;
+        public const int MUTATION_ODDS = 100000;
         public const bool MULTI_THREADED = true;
+        public const bool RANDOM_BEGINNING = false;
 
         public const int SET_SIZE = 10;
 
@@ -26,8 +29,12 @@ namespace BlackJackEvolution.App
             // Create initial batch of players
             for (int i = 0; i < NUM_PLAYERS; i++)
             {
-                players[i] = new Player();
-                players[i].Name = i.ToString();
+                var p = new Player(RANDOM_BEGINNING);
+                for (int g = 0; g < Player.NUM_GENES; g++)
+                    p.Genes[g] = 0xFF;
+                players[i] = p;
+
+                
             }
             // Create initial batch of tables
             for (int i = 0; i < NUM_TABLES; i++)
@@ -40,7 +47,7 @@ namespace BlackJackEvolution.App
 
 
             int generation = 0;
-            while (generation < 5000)
+            while (generation < NUM_GENERATIONS)
             {
                 // Give all the players chips; assign them to a table
                 int tableNum = 0;

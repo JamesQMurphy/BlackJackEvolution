@@ -16,20 +16,21 @@ namespace BlackJackEvolution.Host
             Simulation s = new Simulation();
             s.Start();
 
-            //Table table = new Table(5);
-            //table.Seats[0].Player = new Player();
-            //table.Seats[2].Player = new Player();
-            //table.Seats[3].Player = new Player();
+            // This tests the random number generator
 
-            //// Give them chips
-            //table.Seats[0].Player.Chips = table.Bet * 100;
-            //table.Seats[2].Player.Chips = table.Bet * 100;
-            //table.Seats[3].Player.Chips = table.Bet * 100;
+            //int slots = 23;
+            //int[] hit = new int[slots];
 
-            //for (int i = 0; i < 500; i++)
+            //for (int i = 0; i < 1000000; i++)
             //{
-            //    Console.WriteLine("{0}\n", table.PlayHand());
+            //    int r = CryptoRandom.Generator.Next(slots);
+            //    hit[r]++;
+            //    //Console.WriteLine("{0}", r);
             //}
+
+            //for (int i = 0; i < slots; i++)
+            //    Console.WriteLine("Slot {0} had {1} hits", i, hit[i]);
+
         }
     }
 }

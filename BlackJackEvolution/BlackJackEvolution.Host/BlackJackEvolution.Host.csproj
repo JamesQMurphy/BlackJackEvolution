@@ -54,6 +54,10 @@
       <Project>{722d696b-b549-4582-90c1-3c9dbcac6cf9}</Project>
       <Name>BlackJackEvolution.App</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CryptoRandom\CryptoRandom.csproj">
+      <Project>{3ef237ae-6c95-4e9d-b54a-1b0501125f1e}</Project>
+      <Name>CryptoRandom</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PlayingCards\PlayingCards.csproj">
       <Project>{8c72e3c3-3123-4a82-870c-91ec86f73904}</Project>
       <Name>PlayingCards</Name>

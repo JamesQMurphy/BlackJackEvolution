@@ -14,13 +14,15 @@ namespace BlackJackEvolution.App
         public readonly byte[] Genes = new byte[NUM_GENES];
         public int Chips { get; set; }
 
-        public Player()
+        public Player(bool randomize)
         {
-            Random r = new Random();
-            r.NextBytes(Genes);
+            if (randomize)
+            {
+                CryptoRandom.Generator.NextBytes(Genes);
+            }
         }
 
-        public Player(Player parent1, Player parent2) : this()
+        public Player(Player parent1, Player parent2) : this(false)
         {
             for(int i = 0; i < NUM_GENES; i++)
             {

@@ -12,7 +12,7 @@ namespace CryptoRandom
         private const int INT_MAX_BOUNDS = 4096;
         private static RNGCryptoServiceProvider _generator = new RNGCryptoServiceProvider();
         private static byte[] _intArray = new byte[INT_MAX_BOUNDS];
-        private static int _currentIndex = 0;
+        private static int _currentIndex = INT_MAX_BOUNDS;
 
         // pilfered from .NET Source code
         // https://referencesource.microsoft.com/#mscorlib/system/random.cs,bb77e610694e64ca
