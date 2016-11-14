@@ -9,7 +9,7 @@ namespace CryptoRandom
 {
     public static class Generator
     {
-        private const int INT_MAX_BOUNDS = 4096;
+        private const int INT_MAX_BOUNDS = 16384;
         private static RNGCryptoServiceProvider _generator = new RNGCryptoServiceProvider();
         private static byte[] _intArray = new byte[INT_MAX_BOUNDS];
         private static int _currentIndex = INT_MAX_BOUNDS;

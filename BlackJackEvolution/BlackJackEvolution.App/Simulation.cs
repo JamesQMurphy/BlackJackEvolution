@@ -14,10 +14,11 @@ namespace BlackJackEvolution.App
 
         public const int NUM_GENERATIONS = 10000;
         public const int BET = 10;
-        public const int INITIAL_CHIPS = 5000;
+        public const int INITIAL_CHIPS = 8000;
         public const int MUTATION_ODDS = 100000;
         public const bool MULTI_THREADED = true;
-        public const bool RANDOM_BEGINNING = false;
+        public const bool RANDOM_GENE_BEGINNING = false;
+        public const int SET_GENE_BEGINNING = 0xFF;
 
         public const int SET_SIZE = 10;
 
@@ -29,12 +30,13 @@ namespace BlackJackEvolution.App
             // Create initial batch of players
             for (int i = 0; i < NUM_PLAYERS; i++)
             {
-                var p = new Player(RANDOM_BEGINNING);
-                for (int g = 0; g < Player.NUM_GENES; g++)
-                    p.Genes[g] = 0xFF;
+                var p = new Player(RANDOM_GENE_BEGINNING);
+                if ( !RANDOM_GENE_BEGINNING)
+                {
+                    for (int g = 0; g < Player.NUM_GENES; g++)
+                        p.Genes[g] = SET_GENE_BEGINNING;
+                }
                 players[i] = p;
-
-                
             }
             // Create initial batch of tables
             for (int i = 0; i < NUM_TABLES; i++)
@@ -86,7 +88,6 @@ namespace BlackJackEvolution.App
                             }, tables[i]);
                         }
                         Task.WaitAll(taskArray);
-                        GC.Collect();
                     }
 
                     // single-threaded
@@ -106,7 +107,8 @@ namespace BlackJackEvolution.App
 
                     //Console.WriteLine("After set {0}, {1} players are out", set, count);
                 }
-                Console.WriteLine("Generation {0} lasted {1} sets", generation, set);
+                double longevity = (double)set * SET_SIZE * 100.0 / BET / INITIAL_CHIPS;
+                Console.WriteLine("Generation {0} lasted {1} sets = longevity {2}", generation, set, longevity);
 
                 // Sort the players by chips left
                 Array.Sort(players, delegate (Player x, Player y) { return y.Chips.CompareTo(x.Chips); });
